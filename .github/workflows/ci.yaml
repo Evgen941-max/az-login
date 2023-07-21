@@ -1,0 +1,36 @@
+name: Service deploy to AKS
+
+
+on:
+  push:
+    branches:
+      - master
+
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  build_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ckeckout repo and get tag
+        uses: actions/checkout@v2
+
+
+      - name: 'Login Azure'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+            az group list
