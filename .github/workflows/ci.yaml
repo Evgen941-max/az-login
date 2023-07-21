@@ -12,7 +12,7 @@ defaults:
     working-directory: .
 
 jobs:
-  build_image:
+  login_to_azure:
     runs-on: ubuntu-latest
     steps:
       - name: Ckeckout repo and get tag
